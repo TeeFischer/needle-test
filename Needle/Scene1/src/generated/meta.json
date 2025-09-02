@@ -1,0 +1,16 @@
+{
+  "needleEditor": null,
+  "meta": null,
+  "absolutePath": "https://localhost:3000",
+  "sceneName": "Scene 1",
+  "deployOnly": false,
+  "generator": "Unity 2021.3.45f1, Needle Engine Integration @4.8.8",
+  "gzip": true,
+  "allowHotReload": true,
+  "developmentBuild": false,
+  "license": {
+    "team": "org_0dhtfrkdfexn"
+  },
+  "facebookInstantGames": null,
+  "useRapier": true
+}
