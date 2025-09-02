@@ -28,6 +28,7 @@ jobs:
     - name: Deploy needle to gh-pages
       uses: peaceiris/actions-gh-pages@v3
       with:
+        force_orphan: true  # Überschreibt komplett den Branch
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./Needle/Scene1
         publish_branch: gh-pages
