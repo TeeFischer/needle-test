@@ -1,7 +1,18 @@
-Temp/
+# Unity-generated folders
 Library/
-Logs/
+Temp/
 Obj/
 Build/
-UserSettings/
+Builds/
+Logs/
 MemoryCaptures/
+UserSettings/
+.burst/
+.vscode/
+
+# Unity Asset Store
+*.unitypackage
+
+# OS-generated
+.DS_Store
+Thumbs.db
