@@ -6,7 +6,7 @@ permissions:
 on:
   push:
     branches:
-      - main  # Bei Push auf main
+      - main
 
 jobs:
   deploy:
@@ -24,15 +24,19 @@ jobs:
       with:
         node-version: '16'
 
-    # Optionaler Build-Schritt
-    # - run: npm install
-    # - run: npm run build
-
     - name: Copy specific files to deploy folder
       run: |
         mkdir deploy
-#        cp Needle/Scene1/index.html deploy/
         cp -r Needle/Scene1/dist/* deploy/
+
+    - name: Unzip index.html.gz
+      run: |
+        if [ -f deploy/index.html.gz ]; then
+          gunzip -f deploy/index.html.gz
+        else
+          echo "index.html.gz not found"
+          exit 1
+        fi
 
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
