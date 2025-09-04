@@ -38,6 +38,15 @@ jobs:
           exit 1
         fi
 
+    - name: Unzip all .gz files in assets
+      run: |
+        if [ -d deploy/assets ]; then
+          find deploy/assets -name "*.gz" -exec gunzip -f {} \;
+        else
+          echo "assets folder not found"
+          exit 1
+        fi
+
     - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
       with:
