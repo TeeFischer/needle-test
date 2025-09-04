@@ -31,7 +31,7 @@ jobs:
     - name: Copy specific files to deploy folder
       run: |
         mkdir deploy
-        cp Needle/Scene1/index.html deploy/
+#        cp Needle/Scene1/index.html deploy/
         cp -r Needle/Scene1/dist/* deploy/
 
     - name: Deploy to gh-pages
