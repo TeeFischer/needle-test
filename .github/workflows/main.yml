@@ -6,7 +6,7 @@ permissions:
 on:
   push:
     branches:
-      - main  # Wenn du auf main pushst
+      - main  # Bei Push auf main
 
 jobs:
   deploy:
@@ -16,22 +16,28 @@ jobs:
     - name: Checkout main branch
       uses: actions/checkout@v3
       with:
-        persist-credentials: false  # Keine GitHub Token Credentials weitergeben
-        fetch-depth: 0             # Voller Klon, damit wir alle Branches sehen
+        persist-credentials: false
+        fetch-depth: 0
 
     - name: Setup Node.js (falls Build nötig)
       uses: actions/setup-node@v3
       with:
-        node-version: '16' # Beispiel, falls du einen Build machen musst
+        node-version: '16'
 
-    # Optional: Build-Schritt hier, wenn nötig
+    # Optionaler Build-Schritt
     # - run: npm install
     # - run: npm run build
 
-    - name: Deploy needle to gh-pages
+    - name: Copy specific files to deploy folder
+      run: |
+        mkdir deploy
+        cp Needle/Scene1/index.html deploy/
+        cp -r Needle/Scene1/dist/* deploy/
+
+    - name: Deploy to gh-pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        force_orphan: true  # Überschreibt komplett den Branch
+        force_orphan: true
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./Needle/Scene1
+        publish_dir: ./deploy
         publish_branch: gh-pages
