@@ -4,7 +4,7 @@
   "absolutePath": null,
   "sceneName": "Scene 1",
   "deployOnly": false,
-  "generator": "Unity 2021.3.45f1, Needle Engine Integration @4.8.8",
+  "generator": "Unity 2021.3.45f1, Needle Engine Integration @4.8.9",
   "gzip": true,
   "allowHotReload": true,
   "developmentBuild": false,

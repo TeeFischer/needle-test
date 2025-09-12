@@ -9,7 +9,7 @@
     "gltf:transform": "npm run transform --prefix node_modules/@needle-tools/gltf-build-pipeline"
   },
   "dependencies": {
-	  "@needle-tools/engine": "4.8.8",
+	  "@needle-tools/engine": "4.8.9",
 	  "three": "npm:@needle-tools/three@0.169.11"
 	},
   "devDependencies": {
