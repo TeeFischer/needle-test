@@ -1,10 +1,10 @@
 {
   "needleEditor": null,
   "meta": null,
-  "absolutePath": "https://localhost:3000",
+  "absolutePath": null,
   "sceneName": "Scene 1",
   "deployOnly": false,
-  "generator": "Unity 2021.3.45f1, Needle Engine Integration @4.8.9",
+  "generator": "Unity 2021.3.45f1, Needle Engine Integration @4.9.3",
   "gzip": true,
   "allowHotReload": true,
   "developmentBuild": false,

@@ -1,11 +1,11 @@
 {
   "dependencies": {
     "com.needle.engine-exporter": {
-      "version": "4.8.9",
+      "version": "4.9.3",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "org.khronos.unitygltf": "2.17.9",
+        "org.khronos.unitygltf": "2.17.10",
         "com.unity.modules.animation": "1.0.0",
         "com.unity.modules.unitywebrequest": "1.0.0",
         "com.unity.modules.uielements": "1.0.0",
@@ -259,7 +259,7 @@
       "url": "https://packages.unity.com"
     },
     "org.khronos.unitygltf": {
-      "version": "2.17.9",
+      "version": "2.17.10",
       "depth": 1,
       "source": "registry",
       "dependencies": {
