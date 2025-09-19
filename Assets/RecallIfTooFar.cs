@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro; // Wichtig für TextMeshPro
 
 public class RecallIfTooFar : MonoBehaviour
 {
-    public Transform cameraTransform;     // Zuweisung der Kamera (z. B. AR-Kamera)
-    public float maxDistance = 5f;        // Maximale Entfernung bevor der Button erscheint
-    public Button recallButton;           // UI-Button im Canvas
+    public Transform cameraTransform;              // Zuweisung der Kamera (z. B. AR-Kamera)
+    public float maxDistance = 5f;                 // Maximale Entfernung bevor der Button erscheint
+    public Button recallButton;                    // UI-Button im Canvas
+    public TextMeshProUGUI recallButtonText;       // TextMeshPro-Komponente im Button
 
     private bool isTooFar = false;
 
@@ -25,8 +27,16 @@ public class RecallIfTooFar : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, cameraTransform.position);
 
-        
+        // Debug-Ausgabe
+        Debug.Log("Aktuelle Distanz zur Kamera: " + distance.ToString("F2") + " Meter");
 
+        // Text im Button aktualisieren (wenn zugewiesen)
+        if (recallButtonText != null)
+        {
+            recallButtonText.text = "Recall (" + distance.ToString("F2") + "m)";
+        }
+
+        // Button anzeigen/verstecken je nach Distanz
         if (distance > maxDistance && !isTooFar)
         {
             isTooFar = true;
