@@ -7,7 +7,7 @@
   "generator": "Unity 2021.3.45f1, Needle Engine Integration @4.9.3",
   "gzip": true,
   "allowHotReload": true,
-  "developmentBuild": false,
+  "developmentBuild": true,
   "license": {
     "team": "org_0dhtfrkdfexn"
   },

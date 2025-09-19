@@ -25,6 +25,8 @@ public class RecallIfTooFar : MonoBehaviour
     {
         float distance = Vector3.Distance(transform.position, cameraTransform.position);
 
+        
+
         if (distance > maxDistance && !isTooFar)
         {
             isTooFar = true;
