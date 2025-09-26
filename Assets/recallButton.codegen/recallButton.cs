@@ -9,8 +9,9 @@ namespace Needle.Typescript.GeneratedComponents
 	{
 		public UnityEngine.Camera @cam;
 		public float @maxDistance = 5f;
+		public UnityEngine.GameObject @objectToTeleport;
 		public void start(){}
-		public void update(){}
+		public void recallObject(){}
 	}
 }
 
