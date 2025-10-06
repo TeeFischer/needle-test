@@ -9,6 +9,9 @@ namespace Needle.Typescript.GeneratedComponents
 	{
 		public UnityEngine.GameObject @vorzeigeModell;
 		public UnityEngine.GameObject @bauteilPrefab;
+		public UnityEngine.GameObject @ergebnisCanvas;
+		public UnityEngine.GameObject @ergebnisText;
+		// public undefined @myTime; → Could not resolve C# type
 		public void onPointerClick(){}
 		public void startSpiel(){}
 	}

@@ -1,5 +1,6 @@
 import { Behaviour, serializable, GameObject, Time, Mathf } from "@needle-tools/engine";
 import { Vector3 } from "three";
+import { Text } from "@needle-tools/engine"; // Standard-UI-Text-Komponente
 
 export class Montagespiel extends Behaviour {
     
@@ -9,7 +10,23 @@ export class Montagespiel extends Behaviour {
     @serializable(GameObject)
     bauteilPrefab!: GameObject;    // Das kopierbare Bauteil
 
+    @serializable(GameObject)
+    ergebnisCanvas!: GameObject;
+
+    @serializable(GameObject)
+    ergebnisText!: GameObject;
+
     private zielPositionen: Map<GameObject, Vector3> = new Map();
+
+    private currentIndex: number = 1; // Start bei "1"
+    private totalParts: number = 0;   // Gesamtanzahl der zu bewegenden Objekte
+    private errors: number = 0;       // Fehlerzähler (optional)
+
+    private gameStart = 0; // Startzeitpunkt in Sekunden
+    private gameEnd = 0;   // End-Zeitpunkt in Sekunden
+    private gameTime = 0; 
+
+    myTime = new Time();
 
     onPointerClick() {
         this.startSpiel();
@@ -22,9 +39,15 @@ export class Montagespiel extends Behaviour {
         // 2. Kopie des Bauteils erzeugen
         this.bauteilPrefab.activeSelf = true;
 
+        // 3. Kinder des Bauteils verschieben
         for (const child of this.bauteilPrefab.children) {
+            // Nur Kinder mit Namen, die mit Zahl beginnen
+            //if (!["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"].some(d => child.name.startsWith(d))) continue; 
+            if (!["1", "2", "3", "4", "5", "6", "7", "8", "9"].some(d => child.name.startsWith(d))) continue;
+
             // Ausgabe in Konsole
             console.log(`Child '${child.name}' wurde verschoben auf`, child.position);
+            this.totalParts++;
 
             const go = child as GameObject;
             const zielPos = child.position.clone();
@@ -32,42 +55,72 @@ export class Montagespiel extends Behaviour {
 
             // Zufällige Verschiebung
             const randomOffset = new Vector3(
-                Mathf.random(-1, 1),
-                Mathf.random(0.5, 1.5),
-                Mathf.random(-1, 1)
-            );
+                Mathf.random(0, 0.2),
+                Mathf.random(0.1, 0.5),
+                Mathf.random(-0.2, -1)
+            );  // Richtungen -/+ (rein/raus, hoch/runter, links/rechts)
             child.position.add(randomOffset);
 
-            // Klick-Listener hinzufügen
-            go.addEventListener("pointerdown", () => this.handleClick(go));
+            // Klick-Action hinzufügen
+            const clickHandler = go.addComponent(ClickHandler);
+            clickHandler.onClick = () => this.handleClick(go);
         }
+
+        this.gameStart = this.myTime.time;
     }
 
     private handleClick(obj: GameObject) {
+        // Extrahiere führende Zahl aus dem Namen (z.B. "3_Schraube")
+        const match = obj.name.match(/^(\d+)/);
+        if (!match) {
+            console.log(`Ungültiger Name: '${obj.name}'`);
+            return;
+        }
+
+        const nummer = parseInt(match[1]);
+
+        // Nur das aktuell erlaubte Objekt darf geklickt werden
+        if (nummer !== this.currentIndex) {
+            console.log(`Falsches Teil! Erwartet: ${this.currentIndex}, aber geklickt: ${nummer}`);
+            this.errors++;
+            return;
+        }
+
+        // Teste ob das Objekt ein Ziel hat
         const ziel = this.zielPositionen.get(obj);
-        if (!ziel) return;
+        if (!ziel) {
+            console.log(`Child '${obj}' hat kein Ziel`);
+            return;
+        }
 
-        // Sanft zur Zielposition bewegen
-        this.animateToPosition(obj, ziel);
-    }
+        // Objekt zur Zielposition bewegen
+        obj.position.copy(ziel);
+        console.log(`Bewege N°${this.currentIndex} of ${this.totalParts} '${obj}' zum Ziel`, ziel, );
 
-    private animateToPosition(obj: GameObject, ziel: Vector3) {
-        const duration = 0.5;
-        const start = obj.position.clone();
-        const startTime = Time.time;
+        this.currentIndex++;
 
-        const update = () => {
-            const t = (Time.time - startTime) / duration;
-            if (t >= 1) {
-                obj.position.copy(ziel);
-                return;
+        if (this.currentIndex > this.totalParts) {
+            this.gameEnd = this.myTime.time;
+            this.gameTime = this.gameEnd - this.gameStart;
+            console.log("🎉 Alle Teile korrekt platziert! Spielzeit:", this.gameTime);
+            
+            // Optional: Spielende-Logik oder Restart
+            // ✅ UI anzeigen
+            this.ergebnisCanvas.activeSelf = true;
+
+            // Text setzen (ohne TextMeshPro)
+            const textComponent = this.ergebnisText.getComponent(Text);
+            if (textComponent) {
+                textComponent.text = `Spielzeit: ${this.gameTime.toFixed(2)} Sekunden\nFehler: ${this.errors}`;
             }
+        }
+    }
+}
 
-            const lerped = start.clone().lerp(ziel, t);
-            obj.position.copy(lerped);
-            requestAnimationFrame(update);
-        };
+class ClickHandler extends Behaviour {
+    onClick?: () => void;
 
-        requestAnimationFrame(update);
+    onPointerDown() {
+        if (this.onClick) this.onClick();
     }
 }
