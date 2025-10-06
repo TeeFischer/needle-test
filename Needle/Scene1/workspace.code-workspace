@@ -6,6 +6,16 @@
     {
       "name": "Needle Engine",
       "path": "./node_modules/@needle-tools/engine"
+    },
+    {
+      "name": "montagespiel",
+      "path": "node_modules/montagespiel",
+      "@needle:managed": true
+    },
+    {
+      "name": "visibility",
+      "path": "node_modules/visibility",
+      "@needle:managed": true
     }
   ],
   "settings": {

@@ -1,4 +1,10 @@
-﻿/* eslint-disable */
+﻿// Import types from dependencies
+import "montagespiel"
+import "montagespiel/codegen/register_types.ts"
+import "visibility"
+import "visibility/codegen/register_types.ts"
+
+/* eslint-disable */
 import { TypeStore } from "@needle-tools/engine"
 
 // Import types
