@@ -27,6 +27,17 @@ MonoBehaviour:
   - Path: Assets/CollaborativeSandbox.unity
     Projects: []
     BuilderScene: 
+  - Path: Assets/Scenes/GameScene1.unity
+    Projects: []
+    BuilderScene: 
+  - Path: Assets/Scenes/MainScene.unity
+    Projects:
+    - ProjectPath: Needle/Scene1
+    BuilderScene: 
+  - Path: Assets/Scenes/ObservationScene.unity
+    Projects:
+    - ProjectPath: Needle/Scene1
+    BuilderScene: 
   Projects:
   - ProjectPath: Library/Needle/Sample
   - ProjectPath: Needle/Scene1
