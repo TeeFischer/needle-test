@@ -78,6 +78,11 @@ export class Montagespiel extends Behaviour {
 
     /// Diese Funktion wird aufgerufen wenn eins der Bauteile angeklickt wird.
     private handleClick(obj: GameObject) {
+        if (this.gameEnd != 0) {
+            // Spiel ist zuende
+            return;
+        }
+
         // Extrahiere führende Zahl aus dem Namen (z.B. "3_Schraube")
         const match = obj.name.match(/^(\d+)/);
         if (!match) {
