@@ -66,9 +66,17 @@ export class Montagespiel extends Behaviour {
             clickHandler.onClick = () => this.handleClick(go);
         }
 
-        this.gameStart = this.myTime.time;
+        // Whiteboard und UI anzeigen
+        this.ergebnisCanvas.activeSelf = true;
+        const textComponent = this.ergebnisText.getComponent(Text);
+        if (textComponent) {
+            textComponent.text = `Fortschritt: 0 %\nFehler: ${this.errors}`;
+        }
+        // Startzeuit bestimmen
+        this.gameStart = performance.now();
     }
 
+    /// Diese Funktion wird aufgerufen wenn eins der Bauteile angeklickt wird.
     private handleClick(obj: GameObject) {
         // Extrahiere führende Zahl aus dem Namen (z.B. "3_Schraube")
         const match = obj.name.match(/^(\d+)/);
@@ -83,6 +91,13 @@ export class Montagespiel extends Behaviour {
         if (nummer !== this.currentIndex) {
             console.log(`Falsches Teil! Erwartet: ${this.currentIndex}, aber geklickt: ${nummer}`);
             this.errors++;
+            // Zwischenstand Anzeigen
+            const fortschritt = (this.currentIndex -1 )*100 /this.totalParts;
+
+            const textComponent = this.ergebnisText.getComponent(Text);
+            if (textComponent) {
+                textComponent.text = `Fortschritt: ${fortschritt.toFixed(0)} %\nFehler: ${this.errors}`;
+            }
             return;
         }
 
@@ -99,19 +114,25 @@ export class Montagespiel extends Behaviour {
 
         this.currentIndex++;
 
+        // Spielende
         if (this.currentIndex > this.totalParts) {
-            this.gameEnd = this.myTime.time;
-            this.gameTime = this.gameEnd - this.gameStart;
-            console.log("🎉 Alle Teile korrekt platziert! Spielzeit:", this.gameTime);
-            
-            // Optional: Spielende-Logik oder Restart
-            // ✅ UI anzeigen
-            this.ergebnisCanvas.activeSelf = true;
+            this.gameEnd = performance.now();
 
-            // Text setzen (ohne TextMeshPro)
+            this.gameTime = (this.gameEnd - this.gameStart) /1000;
+            console.log("🎉 Alle Teile korrekt platziert! Spielzeit:", this.gameTime);
+
+            // Text setzen
             const textComponent = this.ergebnisText.getComponent(Text);
             if (textComponent) {
                 textComponent.text = `Spielzeit: ${this.gameTime.toFixed(2)} Sekunden\nFehler: ${this.errors}`;
+            }
+        } else{
+            // Zwischenstand Anzeigen
+            const fortschritt = (this.currentIndex -1 )*100 /this.totalParts;
+
+            const textComponent = this.ergebnisText.getComponent(Text);
+            if (textComponent) {
+                textComponent.text = `Fortschritt: ${fortschritt.toFixed(0)} %\nFehler: ${this.errors}`;
             }
         }
     }

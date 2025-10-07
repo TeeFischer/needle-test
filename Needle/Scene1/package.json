@@ -9,10 +9,11 @@
     "gltf:transform": "npm run transform --prefix node_modules/@needle-tools/gltf-build-pipeline"
   },
   "dependencies": {
-	  "@needle-tools/engine": "4.10.2",
+	  "@needle-tools/engine": "4.10.3",
 	  "three": "npm:@needle-tools/three@0.169.11",
-	  "montagespiel": "file:../../Assets/Needle/Montagespiel~",
-	  "visibility": "file:../../Assets/Needle/VisibilityScript~"
+	  "reload": "file:../../Assets/Needle/Reload~",
+	  "visibility": "file:../../Assets/Needle/VisibilityScript~",
+	  "montagespiel": "file:../../Assets/Needle/Montagespiel~"
 	},
   "devDependencies": {
 	  "@needle-tools/helper": "1.11.5",

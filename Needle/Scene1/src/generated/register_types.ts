@@ -1,6 +1,8 @@
 ﻿// Import types from dependencies
 import "montagespiel"
 import "montagespiel/codegen/register_types.ts"
+import "reload"
+import "reload/codegen/register_types.ts"
 import "visibility"
 import "visibility/codegen/register_types.ts"
 
